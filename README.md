@@ -1,6 +1,8 @@
 # weather-sms
+使用`imessage`发送天气消息
 
-# 使用 `imessage` 发送天气消息
+## Description 
+发送`imessage`需要使用 `Apple Script`。
 
 ## 彩云天气
 使用最新的 `v2.6` 彩云API，[需要去申请key](http://caiyunapp.com/api/weather_intro.html)
@@ -11,13 +13,14 @@
 ![image](./docs/images/caiyun.png)
 
 ## 如何使用
-1. 修改配置文件 `conf/config.yaml`即可灵活发送你的专属定制
+1. 修改配置文件 `conf/config.yaml` 即可灵活发送你的专属定制
 2. 考虑到手机屏幕显示的问题，内容会根据 `空格` 自动换行
+3. 发送失败，先用当前设备手动发送一条消息
 
 
 ## eg:
 ```text
-XXX早上好呀
+XXX早上好
 
 今日温度为: 11°C~26°
 当前温度为: 15°C
@@ -31,4 +34,23 @@ XXX早上好呀
 记得按时吃饭哦(￣^￣)ゞ
 
 bogeia
+```
+
+内容会根据 `空格` 自动换行
+```text
+server:
+  title: "XXX 早上 好"
+
+XXX
+早上
+好
+
+今日温度为: 11°C~26°
+当前温度为: 15°C
+体感温度为: 14.1°C
+相对湿度为: 66%
+舒适度指数为: 凉爽
+当前天气状况: 未来24小时多云
+未來兩小時: 未来两小时不会有雨。还在加班么？注意休息哦
+日出: 06:20, 日落: 19:11
 ```
