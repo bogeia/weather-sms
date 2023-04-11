@@ -1,6 +1,7 @@
 package main
 
 import (
+	_ "embed"
 	"fmt"
 	"log"
 	"os/exec"
@@ -10,6 +11,9 @@ import (
 	"github.com/bogeia/weather-sms/provider/config"
 	"github.com/bogeia/weather-sms/provider/weather"
 )
+
+//go:embed script/imessage.scpt
+var imessageScript []byte
 
 func main() {
 	conf, err := config.Load(filepath.Join("./", "conf", "config.yaml"))
@@ -29,12 +33,10 @@ func main() {
 	message := fmt.Sprintf("%s\n\n%s\n\n%s\n\n%s",
 		conf.Server.Title, info, conf.Server.End, conf.Server.Form)
 
-	cmd := fmt.Sprintf(`osascript %s "%s" "%s"`,
-		filepath.Join("script", "message.scpt"),
-		conf.Server.Phone,
-		message)
-
-	if _, err = exec.Command("/bin/sh", "-c", cmd).CombinedOutput(); err != nil {
-		log.Panicf("send message failed, err:(%v)", err)
+	cmd := exec.Command("osascript", "-e", string(imessageScript), conf.Server.Phone, message)
+	if _, err = cmd.CombinedOutput(); err != nil {
+		log.Fatalf("send message failed, err:(%v)", err)
 	}
+
+	log.Println("📨 send successful")
 }

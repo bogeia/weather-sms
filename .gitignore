@@ -23,3 +23,5 @@ go.work
 # Binary file
 sms
 weather-sms
+weather-sms_darwin_amd64
+weather-sms_darwin_arm64
